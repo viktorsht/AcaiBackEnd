@@ -20,3 +20,13 @@ def cadastrar_clientes(cliente: schemas.Cliente, db: Session = Depends(get_db)):
 def listar_clientes(db: Session = Depends(get_db)):
     clientes = RepositorioCliente(db).listar()
     return clientes
+
+@app.get('/clientes/{id_user}')
+def obter_cliente(id_user: int, db: Session = Depends(get_db)):
+    user = RepositorioCliente(db).obter(id_user)
+    return user
+
+@app.delete('/clientes/{id_user}')
+def obter_cliente(id_user: int, db: Session = Depends(get_db)):
+    user = RepositorioCliente(db).remover(id_user)
+    return {'data' : 'Removido com Sucesso!'}
