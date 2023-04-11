@@ -45,3 +45,14 @@ class Recipiente(BaseModel):
     volume: str
     class Config:
         orm_mode = True
+
+class Acompanhamento(BaseModel):
+    nome: str
+    class Config:
+        orm_mode = True
+
+class Adicional(BaseModel):
+    nome: str
+    preco: float
+    class Config:
+        orm_mode = True

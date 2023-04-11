@@ -2,12 +2,12 @@ from fastapi import APIRouter, status, Depends, HTTPException
 from typing import List
 from sqlalchemy.orm import Session
 from src.schemas import schemas
-from src.infra.sqlalchemy.repositorios.repositorio_recipiente import RepositorioRecipiente
+from src.infra.sqlalchemy.repositorios.repositorrio_adicional import RepositorioAdicional
 from src.infra.sqlalchemy.config.database import get_db
 
 router = APIRouter()
 
-@router.get('/recipientes', response_model=List[schemas.Recipiente])
+@router.get('/adicionais', response_model=List[schemas.Adicional])
 def listar_recipientes(session: Session = Depends(get_db)):
-    recipientes = RepositorioRecipiente(session).listar()
-    return recipientes
+    adicionais = RepositorioAdicional(session).listar()
+    return adicionais
