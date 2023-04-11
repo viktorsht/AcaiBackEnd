@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.routers import router_usuarios
+from src.routers import router_usuarios, router_estabelecimento, router_recipiente
 app = FastAPI()
 
 origins = [
@@ -16,9 +16,9 @@ app.add_middleware(
 )
 
 app.include_router(router_usuarios.router, prefix='/api/auth')
+app.include_router(router_estabelecimento.router, prefix='/api')
+app.include_router(router_recipiente.router, prefix='/api')
 
 @app.get('/')
 def init_api():
     return {'data' : 'API ok!'}
-
-#caso queira retornar o id dos usuário é só retirar o -> response_model=schemas.Cliente

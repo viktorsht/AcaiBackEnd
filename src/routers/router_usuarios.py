@@ -39,13 +39,8 @@ def login(login_data: schemas.Login, db: Session = Depends(get_db)):
 def meu_perfil(cliente: schemas.Cliente = Depends(obter_usuario_logado)):
     return cliente
     
-
-
-
-
-
-
-
+    
+'''
 @router.get('/clientes', response_model=List[schemas.Cliente])
 def listar_clientes(db: Session = Depends(get_db)):
     clientes = RepositorioCliente(db).listar()
@@ -67,3 +62,5 @@ def atualizar_cliente(id_user: int, cliente: schemas.Cliente, db: Session = Depe
 def remover_cliente(id_user: int, db: Session = Depends(get_db)):
     RepositorioCliente(db).remover(id_user)
     return {"data" : "Removido com sucesso!"}
+
+'''
