@@ -1,4 +1,4 @@
-from sqlalchemy import select, delete
+from sqlalchemy import select, delete, update
 from sqlalchemy.orm import Session
 from src.schemas import schemas
 from src.infra.sqlalchemy.models import models
@@ -24,10 +24,21 @@ class RepositorioCliente():
         clientes = self.db.query(models.Cliente).all()
         return clientes
 
-    def obter(self, user_id: int):
+    def listar_usuario(self, user_id: int):
         stmt = select(models.Cliente).where(models.Cliente.id == user_id)
         user = self.db.execute(stmt)
         return user.scalar()
+    
+    def atualizar(self, id: int,  cliente: schemas.Cliente):
+        stmt = update(models.Cliente).where(models.Cliente.id == id).values(
+            nome = cliente.nome,
+            telefone=cliente.telefone, 
+            senha = cliente.senha
+        )
+        self.db.execute(stmt)
+        self.db.commit()
+        return self.listar_usuario(id)
+
 
     def remover(self, user_id: int):
         stmt = delete(models.Cliente).where(models.Cliente.id == user_id)
