@@ -9,14 +9,18 @@ class Cliente(BaseModel):
     class Config:
         orm_mode = True
 
-class Login(BaseModel):
-    telefone: str
-    senha: str
-
 class ClienteCadastrado(BaseModel):
     id: Optional[int] = None
     nome: str
     telefone: str
     class Config:
         orm_mode = True
+
+class Login(BaseModel):
+    telefone: str
+    senha: str
+
+class LoginSucess(BaseModel):
+    cliente: ClienteCadastrado
+    token: str
 

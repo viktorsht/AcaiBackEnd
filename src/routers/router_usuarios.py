@@ -4,7 +4,8 @@ from sqlalchemy.orm import Session
 from src.schemas import schemas
 from src.infra.sqlalchemy.repositorios.repositorio_clientes import RepositorioCliente
 from src.infra.sqlalchemy.config.database import get_db
-from src.infra.providers import hash_provider
+from src.infra.providers import hash_provider, token_provider
+from src.utils.utils_auth import obter_usuario_logado
 
 router = APIRouter()
 
@@ -17,20 +18,32 @@ def signup(cliente: schemas.Cliente, db: Session = Depends(get_db)):
     cliente_cadastrado = RepositorioCliente(db).criar(cliente)
     return cliente_cadastrado
 
-@router.post('/token', status_code=status.HTTP_200_OK)
+@router.post('/token', status_code=status.HTTP_200_OK, response_model=schemas.LoginSucess)
 def login(login_data: schemas.Login, db: Session = Depends(get_db)):
     senha = login_data.senha
     telefone = login_data.telefone
-    cliente_encontrado = RepositorioCliente(db).verificar_telefone(telefone)
+    usuario = RepositorioCliente(db).verificar_telefone(telefone)
 
-    if not cliente_encontrado:
+    if not usuario:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Telefone ou senha incorretos!")
     
-    senha_valida = hash_provider.hash_password_check(senha, cliente_encontrado.senha)
+    senha_valida = hash_provider.hash_password_check(senha, usuario.senha)
     if not senha_valida:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Telefone ou senha incorretos!")
+    
+    token  = token_provider.create_access_token({'sub' : usuario.telefone})
 
-    return cliente_encontrado
+    return schemas.LoginSucess(cliente=usuario,token=token)
+
+@router.get('/me', status_code=status.HTTP_200_OK, response_model=schemas.ClienteCadastrado)
+def meu_perfil(cliente: schemas.Cliente = Depends(obter_usuario_logado)):
+    return cliente
+    
+
+
+
+
+
 
 
 @router.get('/clientes', response_model=List[schemas.Cliente])
@@ -38,14 +51,14 @@ def listar_clientes(db: Session = Depends(get_db)):
     clientes = RepositorioCliente(db).listar()
     return clientes
 
-@router.get('/me/{id_user}', status_code=status.HTTP_200_OK, response_model=schemas.ClienteCadastrado)
-def obter_cliente(id_user: int, db: Session = Depends(get_db)):
+@router.get('/clientes/{id_user}', status_code=status.HTTP_200_OK, response_model=schemas.ClienteCadastrado)
+def listar_cliente_id(id_user: int, db: Session = Depends(get_db)):
     user = RepositorioCliente(db).listar_usuario(id_user)
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Cliente não encontrado!")
     return user
 
-@router.put('/me/{id_user}')
+@router.put('/clientes/{id_user}')
 def atualizar_cliente(id_user: int, cliente: schemas.Cliente, db: Session = Depends(get_db)):
     user = RepositorioCliente(db).atualizar(id_user, cliente)
     return user

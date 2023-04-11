@@ -6,7 +6,12 @@ ALGORITHM = 'HS256'
 EXPIRE_IN_MIN = 3000
 
 def create_access_token(data: dict):
-    return pwd_context.hash(password)
+    dados = data.copy()
+    expiracao = datetime.utcnow() + timedelta(minutes=EXPIRE_IN_MIN)
+    dados.update({'exp' : expiracao})
+    token_jwt = jwt.encode(dados, SECRETY_KEY, algorithm=ALGORITHM)
+    return token_jwt
 
 def check_access_token(token):
-    return pwd_context.verify(texto, hash)
+    carga = jwt.decode(token, SECRETY_KEY, algorithms=[ALGORITHM])
+    return carga.get('sub')
