@@ -15,7 +15,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(router_usuarios.router)
+app.include_router(router_usuarios.router, prefix='/api/auth')
 
 @app.get('/')
 def init_api():

@@ -19,13 +19,17 @@ class RepositorioCliente():
         self.db.refresh(db_cliente)
         return db_cliente
 
-
     def listar(self):
         clientes = self.db.query(models.Cliente).all()
         return clientes
 
     def listar_usuario(self, user_id: int):
         stmt = select(models.Cliente).where(models.Cliente.id == user_id)
+        user = self.db.execute(stmt)
+        return user.scalar()
+    
+    def verificar_telefone(self, telefone: str):
+        stmt = select(models.Cliente).where(models.Cliente.telefone == telefone)
         user = self.db.execute(stmt)
         return user.scalar()
     
