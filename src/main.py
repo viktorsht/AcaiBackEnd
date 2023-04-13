@@ -6,6 +6,7 @@ from src.routers.local import router_estabelecimento
 from src.routers.product import router_produto
 from src.routers.mouting_acai import router_adicional, router_componente, router_recipiente, router_cobertura
 from src.routers.user import router_usuarios
+from src.routers.order import router_pedidos
 
 app = FastAPI()
 
@@ -30,6 +31,7 @@ app.include_router(router_adicional.router, prefix='/api')
 app.include_router(router_produto.router, prefix='/api')
 app.include_router(route_pagamento.router, prefix='/api')
 app.include_router(route_endereco.router, prefix='/api')
+app.include_router(router_pedidos.router, prefix='/api')
 
 @app.get('/')
 def init_api():

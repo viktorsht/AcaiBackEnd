@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Text, Numeric
+from sqlalchemy import Column, Integer, String, ForeignKey, Text, Numeric, DateTime
+from datetime import datetime
 from src.infra.sqlalchemy.config.database import Base
 
 class InfoEmpresa(Base):
@@ -81,3 +82,16 @@ class Pagamento(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     tipo = Column(String(8))
+
+class Pedido(Base):
+    __tablename__ = 'pedido'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    codigo_entrega = Column(Integer)
+    horario = Column(DateTime, default=datetime.now)
+    id_estabelecimento = Column(Integer, ForeignKey('estabelecimento.id' , name='id_estabelecimento')) 
+    id_produto = Column(Integer, ForeignKey('produto.id' , name='id_produto')) 
+    id_cliente = Column(Integer, ForeignKey('cliente.id' , name='id_cliente')) 
+    id_endereco = Column(Integer, ForeignKey('endereco.id' , name='id_endereco')) 
+    id_pagamento = Column(Integer, ForeignKey('pagamento.id' , name='id_pagamento')) 
+    observacao = Column(String(150))

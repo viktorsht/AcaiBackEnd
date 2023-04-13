@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel
 from typing import List, Optional
 
@@ -90,5 +91,24 @@ class Produto(BaseModel):
 class Pagamento(BaseModel):
     id: Optional[int] = None
     tipo: str
+    class Config:
+        orm_mode = True
+
+class Pedido(BaseModel):
+    id: Optional[int] = None
+    codigo_entrega: Optional[int] = None
+    horario: Optional[datetime] = None
+    id_estabelecimento: int 
+    id_produto: int
+    id_cliente: int
+    id_endereco: int
+    id_pagamento: int
+    observacao: Optional[str] = None
+    class Config:
+        orm_mode = True
+
+class PedidoSimples(BaseModel):
+    id: Optional[int] = None
+    codigo_entrega: Optional[int] = None
     class Config:
         orm_mode = True
