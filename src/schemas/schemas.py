@@ -25,21 +25,34 @@ class LoginSucess(BaseModel):
     token: str
 
 class Estabelecimento(BaseModel):
+    id: Optional[int] = None
     rua: str
     numero: int
     bairro: str
     cidade: str
+    telefone: str
     status_funcionamento: int
     class Config:
         orm_mode = True
     
 class EstabelecimentoInitial(BaseModel):
+    id: Optional[int] = None
     cidade: str
     status_funcionamento: int
     class Config:
         orm_mode = True
 
+class Endereco(BaseModel):
+    id: Optional[int] = None
+    rua: str
+    numero: int
+    bairro: str
+    cidade: str
+    class Config:
+        orm_mode = True
+
 class Recipiente(BaseModel):
+    id: Optional[int] = None
     nome: str
     preco: float
     volume: str
@@ -47,12 +60,35 @@ class Recipiente(BaseModel):
         orm_mode = True
 
 class Acompanhamento(BaseModel):
+    id: Optional[int] = None
+    nome: str
+    class Config:
+        orm_mode = True
+
+class Cobertura(BaseModel):
+    id: Optional[int] = None
     nome: str
     class Config:
         orm_mode = True
 
 class Adicional(BaseModel):
+    id: Optional[int] = None
     nome: str
     preco: float
+    class Config:
+        orm_mode = True
+
+class Produto(BaseModel):
+    id: Optional[int] = None
+    id_recipiente: int 
+    id_adicional: int
+    id_componente: int
+    id_cobertura: int
+    class Config:
+        orm_mode = True
+
+class Pagamento(BaseModel):
+    id: Optional[int] = None
+    tipo: str
     class Config:
         orm_mode = True

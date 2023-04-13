@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError
 from sqlalchemy.orm import Session
-from src.infra.sqlalchemy.repositorios.repositorio_clientes import RepositorioCliente
+from src.infra.sqlalchemy.repositorios.user.repositorio_clientes import RepositorioCliente
 from src.infra.sqlalchemy.config.database import get_db
 from src.infra.providers import token_provider
 

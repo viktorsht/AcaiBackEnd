@@ -2,7 +2,7 @@ from fastapi import APIRouter, status, Depends, HTTPException
 from typing import List
 from sqlalchemy.orm import Session
 from src.schemas import schemas
-from src.infra.sqlalchemy.repositorios.repositorio_clientes import RepositorioCliente
+from src.infra.sqlalchemy.repositorios.user.repositorio_clientes import RepositorioCliente
 from src.infra.sqlalchemy.config.database import get_db
 from src.infra.providers import hash_provider, token_provider
 from src.utils.utils_auth import obter_usuario_logado

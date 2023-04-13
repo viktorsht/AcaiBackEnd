@@ -21,6 +21,15 @@ class Estabelecimento(Base):
     telefone = Column(String(20))
     status_funcionamento = Column(Integer)
 
+class Endereco(Base):
+    __tablename__ = 'endereco'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    rua = Column(String(50))
+    numero = Column(Integer)
+    bairro = Column(String(50))
+    cidade = Column(String(50))
+
 class Cliente(Base):
     __tablename__ = 'cliente'
 
@@ -43,9 +52,32 @@ class Componente(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String(20))
 
+
+class Cobertura(Base):
+    __tablename__ = 'cobertura'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nome = Column(String(20))
+
+
 class Adicional(Base):
     __tablename__ = 'adicional'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String(20))
     preco = Column(Numeric(10,2))
+
+class Produto(Base):
+    __tablename__ = 'produto'
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    id_recipiente = Column(Integer,ForeignKey('recipiente.id' , name='id_recipiente'))
+    id_adicional = Column(Integer, ForeignKey('adicional.id' , name='id_adicional'))
+    id_componente = Column(Integer, ForeignKey('componente.id' , name='id_componente'))
+    id_cobertura = Column(Integer, ForeignKey('cobertura.id' , name='id_cobertura'))
+
+class Pagamento(Base):
+    __tablename__ = 'pagamento'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    tipo = Column(String(8))
