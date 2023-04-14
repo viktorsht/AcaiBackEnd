@@ -26,3 +26,10 @@ class RepositorioPedido():
     def listar(self):
         pedidos = self.session.query(models.Pedido).all()
         return pedidos
+    
+    def listar_pedidos(self, user_id: int):
+        stmt = select(models.Pedido).where(models.Pedido.id_cliente == user_id)
+        result = self.session.execute(stmt).scalars().all()
+        #user = self.session.execute(stmt)
+        #return user.scalar()
+        return result

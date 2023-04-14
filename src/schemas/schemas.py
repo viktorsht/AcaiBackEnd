@@ -100,7 +100,7 @@ class Pedido(BaseModel):
     horario: Optional[datetime] = None
     id_estabelecimento: int 
     id_produto: int
-    id_cliente: int
+    id_cliente: Optional[int] = None
     id_endereco: int
     id_pagamento: int
     observacao: Optional[str] = None
@@ -112,3 +112,10 @@ class PedidoSimples(BaseModel):
     codigo_entrega: Optional[int] = None
     class Config:
         orm_mode = True
+
+class MeusPedidos(BaseModel):
+    pass
+    #estabelecimento: EstabelecimentoInitial 
+    #produto: Produto
+    #endereco: Endereco
+    #pagamento: Pagamento

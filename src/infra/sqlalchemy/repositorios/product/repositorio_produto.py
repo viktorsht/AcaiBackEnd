@@ -23,3 +23,8 @@ class RepositorioProduto():
     def listar(self):
         produtos = self.session.query(models.Produto).all()
         return produtos
+    
+    def listar_produto_id(self, produto_id: int):
+        stmt = select(models.Produto).where(models.Produto.id == produto_id)
+        user = self.db.execute(stmt)
+        return user.scalar()
