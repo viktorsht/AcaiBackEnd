@@ -12,6 +12,7 @@ app = FastAPI()
 
 origins = [
     'http://127.0.0.1:8000',
+    'https://acaiteria-backend.vercel.app/'
 ]
 
 app.add_middleware(
