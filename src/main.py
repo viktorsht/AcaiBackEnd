@@ -10,7 +10,7 @@ from src.routers.order import router_pedidos
 
 app = FastAPI()
 
-""" origins = [
+origins = [
     'http://127.0.0.1:8000',
     'https://acaiteria-backend.vercel.app/'
 ]
@@ -21,7 +21,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-) """
+)
 
 app.include_router(router_usuarios.router, prefix='/api/auth')
 app.include_router(router_estabelecimento.router, prefix='/api')
