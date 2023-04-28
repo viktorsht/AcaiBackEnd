@@ -1,0 +1,508 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.2 (Debian 15.2-1.pgdg110+1)
+-- Dumped by pg_dump version 15.2 (Debian 15.2-1.pgdg110+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: clientes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.clientes (
+    id integer NOT NULL,
+    nome character varying(50) NOT NULL,
+    telefone character varying(20) NOT NULL,
+    senha character varying(200) NOT NULL
+);
+
+
+ALTER TABLE public.clientes OWNER TO postgres;
+
+--
+-- Name: clientes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.clientes_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.clientes_id_seq OWNER TO postgres;
+
+--
+-- Name: clientes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.clientes_id_seq OWNED BY public.clientes.id;
+
+
+--
+-- Name: endereco; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.endereco (
+    id integer NOT NULL,
+    rua character varying(255),
+    numero character varying(10),
+    bairro character varying(100),
+    complemento character varying(255)
+);
+
+
+ALTER TABLE public.endereco OWNER TO postgres;
+
+--
+-- Name: endereco_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.endereco_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.endereco_id_seq OWNER TO postgres;
+
+--
+-- Name: endereco_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.endereco_id_seq OWNED BY public.endereco.id;
+
+
+--
+-- Name: pagamento; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.pagamento (
+    id integer NOT NULL,
+    nome character varying(50)
+);
+
+
+ALTER TABLE public.pagamento OWNER TO postgres;
+
+--
+-- Name: pagamento_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.pagamento_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pagamento_id_seq OWNER TO postgres;
+
+--
+-- Name: pagamento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.pagamento_id_seq OWNED BY public.pagamento.id;
+
+
+--
+-- Name: pedidos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.pedidos (
+    id integer NOT NULL,
+    produto_id integer NOT NULL,
+    endereco_id integer NOT NULL,
+    cliente_id integer NOT NULL,
+    observacao text,
+    pagamento_id integer
+);
+
+
+ALTER TABLE public.pedidos OWNER TO postgres;
+
+--
+-- Name: pedidos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.pedidos_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pedidos_id_seq OWNER TO postgres;
+
+--
+-- Name: pedidos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.pedidos_id_seq OWNED BY public.pedidos.id;
+
+
+--
+-- Name: produto; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.produto (
+    id integer NOT NULL,
+    nome character varying(255),
+    descricao text,
+    volume_id integer,
+    preco numeric
+);
+
+
+ALTER TABLE public.produto OWNER TO postgres;
+
+--
+-- Name: produto_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.produto_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.produto_id_seq OWNER TO postgres;
+
+--
+-- Name: produto_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.produto_id_seq OWNED BY public.produto.id;
+
+
+--
+-- Name: volume; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.volume (
+    id integer NOT NULL,
+    nome character varying(10)
+);
+
+
+ALTER TABLE public.volume OWNER TO postgres;
+
+--
+-- Name: volume_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.volume_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.volume_id_seq OWNER TO postgres;
+
+--
+-- Name: volume_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.volume_id_seq OWNED BY public.volume.id;
+
+
+--
+-- Name: clientes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clientes ALTER COLUMN id SET DEFAULT nextval('public.clientes_id_seq'::regclass);
+
+
+--
+-- Name: endereco id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.endereco ALTER COLUMN id SET DEFAULT nextval('public.endereco_id_seq'::regclass);
+
+
+--
+-- Name: pagamento id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pagamento ALTER COLUMN id SET DEFAULT nextval('public.pagamento_id_seq'::regclass);
+
+
+--
+-- Name: pedidos id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pedidos ALTER COLUMN id SET DEFAULT nextval('public.pedidos_id_seq'::regclass);
+
+
+--
+-- Name: produto id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.produto ALTER COLUMN id SET DEFAULT nextval('public.produto_id_seq'::regclass);
+
+
+--
+-- Name: volume id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.volume ALTER COLUMN id SET DEFAULT nextval('public.volume_id_seq'::regclass);
+
+
+--
+-- Data for Name: clientes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.clientes (id, nome, telefone, senha) FROM stdin;
+\.
+
+
+--
+-- Data for Name: endereco; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.endereco (id, rua, numero, bairro, complemento) FROM stdin;
+1	Rua A	123	Bairro X	Complemento 1
+2	Rua B	456	Bairro Y	Complemento 2
+3	Rua C	789	Bairro Z	Complemento 3
+\.
+
+
+--
+-- Data for Name: pagamento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.pagamento (id, nome) FROM stdin;
+1	Cartão de crédito
+2	Cartão de débito
+3	Pix
+4	Dinheiro
+\.
+
+
+--
+-- Data for Name: pedidos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.pedidos (id, produto_id, endereco_id, cliente_id, observacao, pagamento_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: produto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.produto (id, nome, descricao, volume_id, preco) FROM stdin;
+1	Ninho	Leite Condensado, leite em pó, granola e banana	1	7.00
+2	Ninho	Leite Condensado, leite em pó, granola e banana	2	10.00
+3	Ninho	Leite Condensado, leite em pó, granola e banana	3	22.00
+4	Mousse	Leite em pó, mousse de morango, morango e banana	1	7.00
+5	Mousse	Leite em pó, mousse de morango, morango e banana	2	10.00
+6	Mousse	Leite em pó, mousse de morango, morango e banana	3	22.00
+7	Mousse Maracujá	Mousse de maracujá, banana e leite em pó	1	7.00
+8	Mousse Maracujá	Mousse de maracujá, banana e leite em pó	2	10.00
+9	Mousse Maracujá	Mousse de maracujá, banana e leite em pó	3	22.00
+10	Ovomaltine	Leite em pó, ovomaltine e morango	1	7.00
+11	Ovomaltine	Leite em pó, ovomaltine e morango	2	10.00
+12	Ovomaltine	Leite em pó, ovomaltine e morango	3	22.00
+13	Gotas de chocolate	Leite em pó, leite condensado e gotas de chocolate	1	7.00
+14	Gotas de chocolate	Leite em pó, leite condensado e gotas de chocolate	2	12.00
+15	Gotas de chocolate	Leite em pó, leite condensado e gotas de chocolate	3	24.00
+16	Choco kids	Leite em pó, confetes, leite condensado e banana	1	8.00
+17	Choco kids	Leite em pó, confetes, leite condensado e banana	2	12.00
+18	Choco kids	Leite em pó, confetes, leite condensado e banana	3	24.00
+19	Nucita	Mousse de morango, nutella e raspas de chocolate	1	11.00
+20	Nucita	Mousse de morango, nutella e raspas de chocolate	2	14.00
+21	Nucita	Mousse de morango, nutella e raspas de chocolate	3	25.00
+22	Bis	Confetes, Bis e leite condensado	1	9.00
+23	Bis	Confetes, Bis e leite condensado	2	12.00
+24	Bis	Confetes, Bis e leite condensado	3	22.00
+25	Ki delícia	Leite em pó, leite condensado, nutella e banana	1	9.00
+26	Ki delícia	Leite em pó, leite condensado, nutella e banana	2	12.00
+27	Ki delícia	Leite em pó, leite condensado, nutella e banana	3	24.00
+28	Fitness	Banana, morango, kiwi e granola	1	9.00
+29	Fitness	Banana, morango, kiwi e granola	2	12.00
+30	Fitness	Banana, morango, kiwi e granola	3	25.00
+31	Creme de cupuaçu	Leite em pó, cupuaçu, leite condensado e banana	1	9.00
+32	Creme de cupuaçu	Leite em pó, cupuaçu, leite condensado e banana	2	12.00
+33	Creme de cupuaçu	Leite em pó, cupuaçu, leite condensado e banana	3	24.00
+34	Casadinho	Cupuaçu, açaí, leite em pó, leite condensado e banana	1	9.00
+35	Casadinho	Cupuaçu, açaí, leite em pó, leite condensado e banana	2	12.00
+36	Casadinho	Cupuaçu, açaí, leite em pó, leite condensado e banana	3	24.00
+\.
+
+
+--
+-- Data for Name: volume; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.volume (id, nome) FROM stdin;
+1	300 ml
+2	500 ml
+3	1 L
+\.
+
+
+--
+-- Name: clientes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.clientes_id_seq', 1, false);
+
+
+--
+-- Name: endereco_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.endereco_id_seq', 3, true);
+
+
+--
+-- Name: pagamento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.pagamento_id_seq', 4, true);
+
+
+--
+-- Name: pedidos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.pedidos_id_seq', 1, false);
+
+
+--
+-- Name: produto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.produto_id_seq', 36, true);
+
+
+--
+-- Name: volume_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.volume_id_seq', 3, true);
+
+
+--
+-- Name: clientes clientes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.clientes
+    ADD CONSTRAINT clientes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: endereco endereco_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.endereco
+    ADD CONSTRAINT endereco_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pagamento pagamento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pagamento
+    ADD CONSTRAINT pagamento_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pedidos pedidos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pedidos
+    ADD CONSTRAINT pedidos_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: produto produto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.produto
+    ADD CONSTRAINT produto_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: volume volume_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.volume
+    ADD CONSTRAINT volume_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pedidos fk_pedidos_pagamento; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pedidos
+    ADD CONSTRAINT fk_pedidos_pagamento FOREIGN KEY (pagamento_id) REFERENCES public.pagamento(id);
+
+
+--
+-- Name: pedidos pedidos_cliente_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pedidos
+    ADD CONSTRAINT pedidos_cliente_id_fkey FOREIGN KEY (cliente_id) REFERENCES public.clientes(id);
+
+
+--
+-- Name: pedidos pedidos_endereco_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pedidos
+    ADD CONSTRAINT pedidos_endereco_id_fkey FOREIGN KEY (endereco_id) REFERENCES public.endereco(id);
+
+
+--
+-- Name: pedidos pedidos_produto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pedidos
+    ADD CONSTRAINT pedidos_produto_id_fkey FOREIGN KEY (produto_id) REFERENCES public.produto(id);
+
+
+--
+-- Name: produto produto_volume_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.produto
+    ADD CONSTRAINT produto_volume_id_fkey FOREIGN KEY (volume_id) REFERENCES public.volume(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
