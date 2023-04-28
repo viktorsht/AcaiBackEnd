@@ -10,12 +10,10 @@ class RepositorioPedido():
     
     def criar(self, pedido: schemas.Pedido):
         db_pedido = models.Pedido(
-            codigo_entrega=pedido.codigo_entrega, #sera?
-            id_estabelecimento=pedido.id_estabelecimento,
-            id_produto=pedido.id_produto,
-            id_cliente=pedido.id_cliente,
-            id_endereco=pedido.id_endereco,
-            id_pagamento=pedido.id_pagamento,
+            produto_id=pedido.id_produto,
+            cliente_id=pedido.id_cliente,
+            endereco_id=pedido.id_endereco,
+            pagamento_id=pedido.id_pagamento,
             observacao=pedido.observacao
         )
         self.session.add(db_pedido)

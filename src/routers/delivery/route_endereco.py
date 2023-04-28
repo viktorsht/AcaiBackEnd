@@ -12,7 +12,7 @@ def signup(endereco: schemas.Endereco, session: Session = Depends(get_db)):
     endereco_criado = RepositorioEndereco(session).criar(endereco)
     return endereco_criado
 
-""" @router.get('/enderecos', response_model=List[schemas.Produto])
+@router.get('/enderecos', response_model=List[schemas.Endereco])
 def listar_produtos(session: Session = Depends(get_db)):
-    produtos = RepositorioProduto(session).listar()
-    return produtos """
+    produtos = RepositorioEndereco(session).listar()
+    return produtos

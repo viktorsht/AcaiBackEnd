@@ -25,80 +25,38 @@ class LoginSucess(BaseModel):
     cliente: ClienteCadastrado
     token: str
 
-class Estabelecimento(BaseModel):
-    id: Optional[int] = None
-    rua: str
-    numero: int
-    bairro: str
-    cidade: str
-    telefone: str
-    status_funcionamento: int
-    class Config:
-        orm_mode = True
-    
-class EstabelecimentoInitial(BaseModel):
-    id: Optional[int] = None
-    cidade: str
-    status_funcionamento: int
-    class Config:
-        orm_mode = True
-
 class Endereco(BaseModel):
     id: Optional[int] = None
     rua: str
     numero: int
     bairro: str
-    cidade: str
+    complemento: str
     class Config:
         orm_mode = True
 
-class Recipiente(BaseModel):
+class Volume(BaseModel):
     id: Optional[int] = None
     nome: str
-    preco: float
-    volume: str
-    class Config:
-        orm_mode = True
-
-class Acompanhamento(BaseModel):
-    id: Optional[int] = None
-    nome: str
-    class Config:
-        orm_mode = True
-
-class Cobertura(BaseModel):
-    id: Optional[int] = None
-    nome: str
-    class Config:
-        orm_mode = True
-
-class Adicional(BaseModel):
-    id: Optional[int] = None
-    nome: str
-    preco: float
     class Config:
         orm_mode = True
 
 class Produto(BaseModel):
     id: Optional[int] = None
-    id_recipiente: int 
-    id_adicional: int
-    id_componente: int
-    id_cobertura: int
+    nome: str
+    descricao: str
+    volume_id: int
+    preco: str # talves dê erro por no banco ser float!
     class Config:
         orm_mode = True
 
 class Pagamento(BaseModel):
     id: Optional[int] = None
-    tipo: str
+    nome: str
     class Config:
         orm_mode = True
 
 class Pedido(BaseModel):
     id: Optional[int] = None
-    codigo_entrega: Optional[int] = None
-    horario: Optional[datetime] = None
-    id_estabelecimento: int 
     id_produto: int
     id_cliente: Optional[int] = None
     id_endereco: int
@@ -109,13 +67,6 @@ class Pedido(BaseModel):
 
 class PedidoSimples(BaseModel):
     id: Optional[int] = None
-    codigo_entrega: Optional[int] = None
+    id_produto: int
     class Config:
         orm_mode = True
-
-class MeusPedidos(BaseModel):
-    pass
-    #estabelecimento: EstabelecimentoInitial 
-    #produto: Produto
-    #endereco: Endereco
-    #pagamento: Pagamento

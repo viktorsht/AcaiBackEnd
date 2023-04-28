@@ -10,10 +10,10 @@ class RepositorioProduto():
     
     def criar(self, produto: schemas.Produto):
         db_produto = models.Produto(
-            id_recipiente=produto.id_recipiente,
-            id_adicional=produto.id_adicional,
-            id_componente=produto.id_componente,
-            id_cobertura=produto.id_cobertura,
+            nome=produto.nome,
+            descricao=produto.descricao,
+            volume_id=produto.volume_id,
+            preco=produto.preco,
         )
         self.session.add(db_produto)
         self.session.commit()

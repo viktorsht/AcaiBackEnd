@@ -2,9 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.routers.delivery import route_endereco, route_pagamento
-from src.routers.local import router_estabelecimento
 from src.routers.product import router_produto
-from src.routers.mouting_acai import router_adicional, router_componente, router_recipiente, router_cobertura
+from src.routers.volume import router_volume
 from src.routers.user import router_usuarios
 from src.routers.order import router_pedidos
 
@@ -24,11 +23,7 @@ app.add_middleware(
 )
 
 app.include_router(router_usuarios.router, prefix='/api/auth')
-app.include_router(router_estabelecimento.router, prefix='/api')
-app.include_router(router_recipiente.router, prefix='/api')
-app.include_router(router_componente.router, prefix='/api')
-app.include_router(router_cobertura.router, prefix='/api')
-app.include_router(router_adicional.router, prefix='/api')
+app.include_router(router_volume.router, prefix='/api')
 app.include_router(router_produto.router, prefix='/api')
 app.include_router(route_pagamento.router, prefix='/api')
 app.include_router(route_endereco.router, prefix='/api')

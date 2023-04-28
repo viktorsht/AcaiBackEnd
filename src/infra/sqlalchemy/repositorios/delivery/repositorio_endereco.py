@@ -13,14 +13,14 @@ class RepositorioEndereco():
             rua=endereco.rua,
             numero=endereco.numero,
             bairro=endereco.bairro,
-            cidade=endereco.cidade,
+            complemento=endereco.complemento,
         )
         self.session.add(db_endereco)
         self.session.commit()
         self.session.refresh(db_endereco)
         return db_endereco
-""" 
+
     def listar(self):
         enderecos = self.session.query(models.Endereco).all()
-        return enderecos """
+        return enderecos
     
